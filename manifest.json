@@ -1,0 +1,6 @@
+{
+    "id": "com.rogmoreno.flatpak_run",
+    "name": "Flatpak Runner",
+    "version": "1.0.0",
+    "thumbnail": "assets/thumbnail.png"
+}

@@ -39,6 +39,25 @@ Sigue estos pasos en una terminal de tu sistema:
 
 3.  **Reinicia StreamController** después de aplicar el permiso.
 
+## Estructura del Código y Adaptación
+
+El código del plugin se encuentra en el archivo `flatpak_run.py` y está escrito en Python. Ha sido diseñado con una estructura genérica de plugin, la cual puede necesitar ajustes para integrarse con la API específica de StreamController.
+
+-   **`flatpak_run.py`**: Contiene toda la lógica del plugin.
+    -   **`FlatpakRunPlugin`**: La clase principal del plugin, responsable de registrar la nueva acción en StreamController.
+    -   **`RunFlatpakAppAction`**: La clase que define la acción "Run Flatpak App". Contiene la lógica para:
+        -   Generar el menú de configuración con la lista de aplicaciones (`get_config_fields`).
+        -   Ejecutar la aplicación seleccionada (`execute`).
+    -   **`get_flatpak_apps()`**: Una función de utilidad que obtiene la lista de aplicaciones Flatpak instaladas en el sistema.
+
+### Adaptación a la API de StreamController
+
+El código asume la existencia de una API de StreamController con ciertas características. Si el plugin не funciona directamente, es probable que necesites ajustar las siguientes partes en `flatpak_run.py`:
+
+1.  **Clase Base de la Acción**: `RunFlatpakAppAction` hereda de una clase hipotética `ActionBase`. Deberás cambiarla por la clase base que StreamController proporcione para las acciones.
+2.  **Método de Registro**: El método `register(self, api)` asume que el objeto `api` tiene un método `register_action`. El nombre de este método y sus parámetros pueden ser diferentes.
+3.  **Definición de la Configuración**: El método `get_config_fields` devuelve una estructura de datos para crear un menú desplegable. El formato (tipos de campo, IDs, etc.) debe coincidir con lo que espera la API de StreamController para construir interfaces de configuración.
+
 ## Autor
 
 -   rogmoreno
@@ -86,6 +105,25 @@ Follow these steps in your system's terminal:
 
 3.  **Restart StreamController** after applying the permission.
 
-## Author
+## Code Structure and Adaptation
+
+The plugin's code is located in the `flatpak_run.py` file and is written in Python. It has been designed with a generic plugin structure, which may require adjustments to integrate with the specific StreamController API.
+
+-   **`flatpak_run.py`**: Contains all the plugin's logic.
+    -   **`FlatpakRunPlugin`**: The main plugin class, responsible for registering the new action with StreamController.
+    -   **`RunFlatpakAppAction`**: The class that defines the "Run Flatpak App" action. It contains the logic to:
+        -   Generate the configuration menu with the list of applications (`get_config_fields`).
+        -   Execute the selected application (`execute`).
+    -   **`get_flatpak_apps()`**: A utility function that retrieves the list of Flatpak applications installed on the system.
+
+### Adapting to the StreamController API
+
+The code assumes the existence of a StreamController API with certain features. If the plugin does not work out-of-the-box, you will likely need to adjust the following parts in `flatpak_run.py`:
+
+1.  **Action Base Class**: `RunFlatpakAppAction` inherits from a hypothetical `ActionBase` class. You should change it to the base class provided by StreamController for actions.
+2.  **Registration Method**: The `register(self, api)` method assumes that the `api` object has a `register_action` method. The name of this method and its parameters may be different.
+3.  **Configuration Definition**: The `get_config_fields` method returns a data structure to create a dropdown menu. The format (field types, IDs, etc.) must match what the StreamController API expects for building configuration interfaces.
+
+## Autor
 
 -   rogmoreno

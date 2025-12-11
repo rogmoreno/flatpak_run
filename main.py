@@ -1,0 +1,25 @@
+# main.py
+from src.backend.PluginManager.PluginBase import PluginBase
+from src.backend.PluginManager.ActionHolder import ActionHolder
+from .actions.run_flatpak.run_flatpak import RunFlatpak
+
+class FlatpakRunPlugin(PluginBase):
+    def __init__(self):
+        super().__init__()
+
+        # --- Register Action ---
+        self.run_flatpak_action_holder = ActionHolder(
+            plugin_base=self,
+            action_base=RunFlatpak,
+            action_id="com.rogmoreno.flatpak_run.run",
+            action_name="Run Flatpak App",
+        )
+        self.add_action_holder(self.run_flatpak_action_holder)
+
+        # --- Register Plugin ---
+        self.register(
+            plugin_name="Flatpak Runner",
+            github_repo="https://github.com/rogmoreno/streamcontroller-flatpak-runner",
+            plugin_version="1.0.0",
+            app_version="1.1.1-alpha",
+        )
