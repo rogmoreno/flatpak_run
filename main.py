@@ -19,7 +19,7 @@ class FlatpakRunPlugin(PluginBase):
         # --- Register Plugin ---
         self.register(
             plugin_name="Flatpak Runner",
-            github_repo="https://github.com/rogmoreno/streamcontroller-flatpak-runner",
+            github_repo="https://github.com/rogmoreno/flatpak_run.git",
             plugin_version="1.0.0",
             app_version="1.1.1-alpha",
         )
