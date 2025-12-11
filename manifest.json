@@ -1,6 +1,22 @@
 {
-    "id": "com.rogmoreno.flatpak_run",
-    "name": "Flatpak Runner",
-    "version": "1.0.0",
-    "thumbnail": "assets/thumbnail.png"
+  "name": "Flatpak Run",
+  "version": "1.0.0",
+  "app-version": "1.5.0-beta.6",
+  "minimum-app-version": "1.5.0",
+  "id": "com_romoreno_flatpak]",
+  "github": "",
+  "thumbnail": "",
+  "descriptions": {
+    "en_US": "Ejecutar aplicacion desde flatpak.",
+    "es_ES": "Running apps from flatpak."
+  },
+  "short-descriptions": {
+    "en_US": "Ejecutar aplicacion desde flatpak.",
+    "es_ES": "Running apps from flatpak."
+  },
+  "tags": [
+    "Flatpak",
+    "Ececution",
+    "Terminal"
+  ]
 }
