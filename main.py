@@ -1,4 +1,5 @@
 # main.py
+from gettext import gettext as _
 from src.backend.PluginManager.PluginBase import PluginBase
 from src.backend.PluginManager.ActionHolder import ActionHolder
 from .actions.run_flatpak.run_flatpak import RunFlatpak
@@ -12,7 +13,7 @@ class FlatpakRunPlugin(PluginBase):
             plugin_base=self,
             action_base=RunFlatpak,
             action_id="com.rogmoreno.flatpak_run.run",
-            action_name=_("actions.run_flatpak.name"),
+            action_name=_("actions.flatpak.name"),
         )
         self.add_action_holder(self.run_flatpak_action_holder)
 
