@@ -1,5 +1,5 @@
 {
     "plugin.name": "Plugin Flatpak",
-    "actions.ssh.name": "Aplicación Flatpak",
-    "actions.sshconnection.name": "Acción de Conexión Flatpak"
+    "actions.flatpak.name": "Aplicación Flatpak",
+    "actions.flatpakconnection.name": "Acción de Conexión Flatpak"
 }
