@@ -1,0 +1,5 @@
+{
+    "plugin.name": "Extension Flatpak",
+    "actions.ssh.name": "Application Flatpak",
+    "actions.sshconnection.name": "Action de Connexion Flatpak"
+}

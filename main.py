@@ -12,13 +12,13 @@ class FlatpakRunPlugin(PluginBase):
             plugin_base=self,
             action_base=RunFlatpak,
             action_id="com.rogmoreno.flatpak_run.run",
-            action_name="Run Flatpak App",
+            action_name=_("actions.run_flatpak.name"),
         )
         self.add_action_holder(self.run_flatpak_action_holder)
 
         # --- Register Plugin ---
         self.register(
-            plugin_name="Flatpak Runner",
+            plugin_name=_("plugin.name"),
             github_repo="https://github.com/rogmoreno/flatpak_run.git",
             plugin_version="1.0.0",
             app_version="1.1.1-alpha",
