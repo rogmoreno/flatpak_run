@@ -2,11 +2,11 @@
 import gi
 gi.require_version("Gtk", "4.0")
 gi.require_version("Adw", "1")
-from gi.repository import Gtk, Adw, Gio, GObject # Added Gio and GObject
+from gi.repository import Gtk, Adw
 import logging
 import subprocess
 from threading import Thread
-import os # Added import for os
+import os
 
 from src.backend.PluginManager.ActionBase import ActionBase
 from src.backend.DeckManagement.DeckController import DeckController
@@ -72,13 +72,63 @@ from typing import Optional, Any
 
 class RunFlatpak(ActionBase):
     def __init__(self, action_id: str, action_name: str, deck_controller: DeckController, page: Page, plugin_base: PluginBase, input_ident: Any, coords: Optional[str] = None, **kwargs):
-        self.input_ident = input_ident # Store input_ident
-        self.flatpak_apps = [] # Store the fetched apps
+        self.flatpak_apps = []
         if coords is None:
-            coords = "" # Provide a default empty string if coords is not provided.
-        # coords is a parameter for RunFlatpak, but not for ActionBase
+            coords = ""
+
         super().__init__(action_id=action_id, action_name=action_name, deck_controller=deck_controller, page=page, plugin_base=plugin_base, input_ident=input_ident, **kwargs)
+
+        # Enable automatic configuration dialog when button is added
+        self.has_configuration = True
         self.combo_row = None
+
+    def on_ready(self):
+        """
+        Called when the action is ready. Updates the button label.
+        Setting the default image/label in this method is recommended over the constructor.
+        """
+        self._update_button_label()
+
+    def on_update(self):
+        """
+        Called when the app wants the action to redraw itself (image, labels, etc.).
+        """
+        self._update_button_label()
+
+    def _update_button_label(self):
+        """
+        Updates the button label to show the configured app name or "No config".
+        """
+        settings = self.get_settings()
+        app_id = settings.get("app_id")
+
+        if app_id:
+            # Try to find the app name from the saved app_id
+            app_name = None
+
+            # If flatpak_apps is not loaded yet, try to load it
+            if not self.flatpak_apps:
+                try:
+                    self.flatpak_apps = get_flatpak_apps()
+                except Exception as e:
+                    logger.error(f"Failed to load flatpak apps for label update: {e}")
+
+            # Search for the app name
+            for app in self.flatpak_apps:
+                if app["id"] == app_id:
+                    app_name = app["name"]
+                    break
+
+            # If we found the name, use it; otherwise use the app_id
+            if app_name:
+                # Truncate if too long
+                label = app_name[:15] + "..." if len(app_name) > 15 else app_name
+            else:
+                label = app_id[:15] + "..." if len(app_id) > 15 else app_id
+
+            self.set_bottom_label(label)
+        else:
+            self.set_bottom_label("No config")
 
     def on_key_down(self):
         settings = self.get_settings()
@@ -140,8 +190,13 @@ class RunFlatpak(ActionBase):
                     self.combo_row.set_selected(i)
                     break
         else:
+            # If no saved config and apps are available, select and save the first app
             if len(self.flatpak_apps) > 0:
                 self.combo_row.set_selected(0)
+                # Save the first app as default
+                settings["app_id"] = self.flatpak_apps[0]["id"]
+                self.set_settings(settings)
+                logger.info(f"Auto-selected first app: {self.flatpak_apps[0]['id']}")
 
     def on_selection_changed(self, combo_row, _):
         """
@@ -150,8 +205,11 @@ class RunFlatpak(ActionBase):
         selected_index = combo_row.get_selected()
         if selected_index >= 0 and self.flatpak_apps:
             app_id = self.flatpak_apps[selected_index]["id"] # Get app_id from stored list
-            
+
             settings = self.get_settings()
             settings["app_id"] = app_id
             self.set_settings(settings)
             logger.info(f"Saved app_id: {app_id}")
+
+            # Update the button label to reflect the new selection
+            self._update_button_label()

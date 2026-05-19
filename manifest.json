@@ -7,16 +7,16 @@
   "github": "",
   "thumbnail": "",
   "descriptions": {
-    "en_US": "Ejecutar aplicacion desde flatpak.",
-    "es_ES": "Running apps from flatpak."
+    "en_US": "Running apps from flatpak.",
+    "es_ES": "Ejecutar aplicacion desde flatpak."
   },
   "short-descriptions": {
-    "en_US": "Ejecutar aplicacion desde flatpak.",
-    "es_ES": "Running apps from flatpak."
+    "en_US": "Running apps from flatpak.",
+    "es_ES": "Ejecutar aplicacion desde flatpak."
   },
   "tags": [
     "Flatpak",
-    "Ececution",
+    "Execution",
     "Terminal"
   ]
 }
